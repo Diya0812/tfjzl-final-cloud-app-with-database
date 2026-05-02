@@ -46,3 +46,12 @@ class Submission(models.Model):
 
     def __str__(self):
         return f"Submission by {self.user}"
+from django.contrib.auth.models import User
+
+class Submission(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    choices = models.ManyToManyField(Choice)
+    submission_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Submission by {self.user.username}"
