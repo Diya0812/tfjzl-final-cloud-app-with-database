@@ -12,9 +12,14 @@ class QuestionInline(admin.TabularInline):
     extra = 1
 
 
-class QuestionAdmin(admin.ModelAdmin):
-    inlines = [ChoiceInline]
-    list_display = ['question_text', 'lesson']
+class LessonInline(admin.TabularInline):
+    model = Lesson
+    extra = 1
+
+
+class CourseAdmin(admin.ModelAdmin):
+    inlines = [LessonInline]
+    list_display = ['name']
 
 
 class LessonAdmin(admin.ModelAdmin):
@@ -22,7 +27,12 @@ class LessonAdmin(admin.ModelAdmin):
     list_display = ['title', 'course']
 
 
-admin.site.register(Course)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [ChoiceInline]
+    list_display = ['question_text', 'lesson']
+
+
+admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
